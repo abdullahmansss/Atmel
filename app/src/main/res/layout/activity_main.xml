@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@android:color/white"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="30dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+
+                        <Button
+                            android:id="@+id/scan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="scan"
+                            android:background="@color/colorAccent"
+                            android:textColor="#fff"
+                            android:textStyle="bold"
+                            />
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+                <com.victor.loading.rotate.RotateLoading
+                    android:id="@+id/rotateloading"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:loading_width="3dp"
+                    app:loading_color="@android:color/white"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="15dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="15dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available Devices"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/devices_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:listitem="@layout/item"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>
