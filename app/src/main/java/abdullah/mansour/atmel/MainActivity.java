@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (!mBluetooth.isEnabled())
             {
-                Intent enableBT = new Intent(mBluetooth.ACTION_REQUEST_ENABLE);
+                Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivity(enableBT);
 
                 IntentFilter filterBT = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -93,73 +93,6 @@ public class MainActivity extends AppCompatActivity
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
             registerReceiver(mReceiver, filter);
-
-            /*int lastIndex = sharedPref.getInt("LAST_INDEX", 0);
-            for (int i=0; i<=lastIndex; i++)
-            {
-                String name = sharedPref.getString("NAME"+String.valueOf(i),"");
-                String mac = sharedPref.getString("MAC"+String.valueOf(i),"");
-
-                if (name.equals("null") && mac.equals(""))
-                {
-                    // Do nothing
-                    String dev = "New Device" + "\n" + mac;
-                    DeviceModel deviceModel = new DeviceModel(name, mac);
-                    deviceModels.add(deviceModel);
-                    devicesListAdapter.notifyDataSetChanged();
-                }
-                else
-                {
-                    DeviceModel deviceModel = new DeviceModel(name, mac);
-                    deviceModels.add(deviceModel);
-                    devicesListAdapter.notifyDataSetChanged();
-                }
-            }*/
-
-
-            /*listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-            {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l)
-                {
-                    String device = listView.getAdapter().getItem(i).toString();
-                    String[] prop = device.split("\n");
-
-                    int id = sharedPref.getInt(prop[1],0);
-                    editor.putString("NAME"+String.valueOf(id),"");
-                    editor.putString("MAC"+String.valueOf(id),"");
-                    editor.putInt(prop[1],-1);
-                    editor.commit();
-
-                    itemsAdapter.remove(device);
-
-                    Toast.makeText(Main.this,"Device Deleted From List",Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            });
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String device = listView.getAdapter().getItem(i).toString();
-                    String[] prop = device.split("\n");
-
-
-                    Intent config = new Intent(Main.this,Device.class);
-                    config.putExtra("NAME",prop[0]);
-                    config.putExtra("MAC",prop[1]);
-
-                    if (sharedPref.getInt(prop[1],-1) == -1) {
-                        int id = sharedPref.getInt("LAST_INDEX", 0);
-                        editor.putString("NAME" + String.valueOf(id), prop[0]);
-                        editor.putString("MAC" + String.valueOf(id), prop[1]);
-                        editor.putInt(prop[1], id);
-                        editor.commit();
-                    }
-
-                    startActivity(config);
-                    //finish();
-                }
-            });*/
         }
 
         scan.setOnClickListener(new View.OnClickListener()
