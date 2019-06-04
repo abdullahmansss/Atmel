@@ -69,6 +69,7 @@ public class DeviceActivity extends AppCompatActivity
         device_mac.setText(mac);
         status.setText("Connecting");
 
+
         send_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
