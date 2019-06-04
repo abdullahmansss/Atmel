@@ -47,17 +47,9 @@ public class DeviceActivity extends AppCompatActivity
     String name,mac;
 
     TextView device_name,device_mac,status;
-    RecyclerView recyclerView;
-    EditText msg_field;
-    ImageButton clear_btn;
     Button send_btn;
 
-    public static MessagesListAdapter messagesListAdapter;
-    public static List<MessageModel> messageModels;
-
     ProgressDialog progressDialog;
-
-    String read_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,44 +63,44 @@ public class DeviceActivity extends AppCompatActivity
         device_name = findViewById(R.id.device_name);
         device_mac = findViewById(R.id.mac_txt);
         status = findViewById(R.id.status_txt);
-        recyclerView = findViewById(R.id.msgs_recyclerview);
-        msg_field = findViewById(R.id.message_field);
-        clear_btn = findViewById(R.id.clear_btn);
-        send_btn = findViewById(R.id.send_btn);
+        send_btn = findViewById(R.id.send);
 
         device_name.setText(name);
         device_mac.setText(mac);
         status.setText("Connecting");
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL));
-        recyclerView.setHasFixedSize(true);
-
-        messageModels = new ArrayList<>();
-        messagesListAdapter = new MessagesListAdapter(messageModels);
-        recyclerView.setAdapter(messagesListAdapter);
-
-        clear_btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                msg_field.setText("");
-            }
-        });
 
         send_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                String msg = msg_field.getText().toString();
+                /*String msg = msg_field.getText().toString();
                 byte[] d = hexStringToByteArray(msg);
                 writeBluetooth(d);
 
                 MessageModel messageModel = new MessageModel(msg,1);
+                messageModels.add(messageModel);
                 messagesListAdapter.notifyDataSetChanged();
+                msg_field.setText("");
+
+                new ReadBT().execute();
+
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        {
+                            //lblFileContents.setText(readMsg);
+                            String msg = read_message;
+
+                            MessageModel messageModel = new MessageModel(read_message,2);
+                            messageModels.add(messageModel);
+                            read_message = "";
+                            messagesListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });*/
             }
         });
 
@@ -130,7 +122,6 @@ public class DeviceActivity extends AppCompatActivity
 
 
         new ConnectBT().execute();
-        new ReadBT().execute();
     }
 
     private void Disconnect()
@@ -237,41 +228,28 @@ public class DeviceActivity extends AppCompatActivity
         }
     }
 
+    String read_message = "";
     private class ReadBT extends AsyncTask<Void, Void, Void>  // UI thread
     {
         byte[] read;
         @Override
         protected Void doInBackground(Void... devices) //while the progress dialog is shown, the connection is done in background
         {
-
             while (mBtSocket.isConnected())
             {
                 try
                 {
                     int av = mBtSocket.getInputStream().available();
+
                     if (av > 0)
                     {
                         read = new byte[av];
                         mBtSocket.getInputStream().read(read);
 
-                        //readMsg = "";
-                        for (int i=0; i<av; i++)
+                        for (int i = 0 ; i < av ; i++)
                         {
                             read_message += String.format("%X",read[i])+ " ";
                         }
-                        //msg(readMsg);
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                {
-                                    //lblFileContents.setText(readMsg);
-                                    MessageModel messageModel = new MessageModel(read_message,2);
-                                    messagesListAdapter.notifyDataSetChanged();
-                                }
-                            }
-                        });
                     }
                 } catch (IOException e)
                 {
@@ -292,69 +270,6 @@ public class DeviceActivity extends AppCompatActivity
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i+1), 16));
         }
         return data;
-    }
-
-    public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapter.Viewholder>
-    {
-        List<MessageModel> messageModels;
-
-        public MessagesListAdapter(List<MessageModel> messageModels)
-        {
-            this.messageModels = messageModels;
-        }
-
-        @NonNull
-        @Override
-        public Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
-        {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
-            return new Viewholder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull final Viewholder viewholder, final int i)
-        {
-            String message = messageModels.get(i).getMessage();
-            int id = messageModels.get(i).getId();
-
-            if (id == 1)
-            {
-                viewholder.message.setText(message);
-                viewholder.message.setTextColor(getResources().getColor(R.color.to));
-
-                viewholder.msg_image.setImageResource(R.drawable.ic_arrow_forward_black_24dp);
-            } else if (id == 2)
-            {
-                viewholder.message.setText(message);
-                viewholder.message.setTextColor(getResources().getColor(R.color.from));
-
-                viewholder.msg_image.setImageResource(R.drawable.ic_arrow_back_black_24dp);
-            }
-        }
-
-        @Override
-        public int getItemCount()
-        {
-            return messageModels.size();
-        }
-
-        class Viewholder extends RecyclerView.ViewHolder
-        {
-            View view;
-
-            TextView message;
-            ImageView msg_image;
-
-            Viewholder(@NonNull View itemView)
-            {
-                super(itemView);
-
-                view = itemView;
-
-                message = view.findViewById(R.id.msg);
-                msg_image = view.findViewById(R.id.msg_image);
-            }
-        }
     }
 
     @Override

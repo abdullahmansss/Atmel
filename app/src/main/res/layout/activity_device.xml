@@ -112,11 +112,11 @@
                 android:orientation="vertical"
                 >
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/msgs_recyclerview"
+                <TextView
+                    android:id="@+id/response"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/message"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     />
 
             </LinearLayout>
@@ -135,72 +135,24 @@
             android:layout_marginTop="15dp"
             >
 
-            <LinearLayout
+            <com.balysv.materialripple.MaterialRippleLayout
+                style="@style/RippleStyleWhite"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 >
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/send"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <EditText
-                        android:id="@+id/message_field"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Enter code here"
-                        android:padding="10dp"
-                        android:background="@android:color/transparent"
-                        android:inputType="text"
-                        />
-
-                    <com.balysv.materialripple.MaterialRippleLayout
-                        style="@style/RippleStyleGrey"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        >
-
-                        <ImageButton
-                            android:id="@+id/clear_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_delete_text"
-                            android:background="@android:color/transparent"
-                            />
-
-                    </com.balysv.materialripple.MaterialRippleLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"
+                    android:layout_height="match_parent"
+                    android:text="send button"
+                    android:background="@android:color/white"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
                     />
 
-                <com.balysv.materialripple.MaterialRippleLayout
-                    style="@style/RippleStyleGrey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-
-                    <Button
-                        android:id="@+id/send_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="send"
-                        android:background="@android:color/transparent"
-                        android:textStyle="bold"
-                        />
-
-                </com.balysv.materialripple.MaterialRippleLayout>
-
-            </LinearLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
 
         </android.support.v7.widget.CardView>
 
