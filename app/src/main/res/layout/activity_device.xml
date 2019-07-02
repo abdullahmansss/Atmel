@@ -116,45 +116,103 @@
                     android:id="@+id/response"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:text="00 00"
+                    />
+
+                <TextView
+                    android:id="@+id/mcu_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:text="MCU : 00 00"
                     />
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
             >
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                style="@style/RippleStyleWhite"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
                 >
 
-                <Button
-                    android:id="@+id/send"
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleGrey"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="send button"
-                    android:background="@android:color/white"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold"
-                    />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
 
-            </com.balysv.materialripple.MaterialRippleLayout>
+                    <Button
+                        android:id="@+id/detectmcu_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="detect mcu"
+                        android:background="@android:color/white"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        />
 
-        </android.support.v7.widget.CardView>
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
+                >
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    style="@style/RippleStyleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+
+                    <Button
+                        android:id="@+id/read_fuse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="read fuse"
+                        android:background="@android:color/white"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        />
+
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

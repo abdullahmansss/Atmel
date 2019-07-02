@@ -46,10 +46,12 @@ public class DeviceActivity extends AppCompatActivity
 
     String name,mac;
 
-    TextView device_name,device_mac,status;
-    Button send_btn;
+    TextView device_name,device_mac,status,response,mcu_txt;
+    Button read_fuse,detect_mcu;
 
     ProgressDialog progressDialog;
+
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,45 +65,54 @@ public class DeviceActivity extends AppCompatActivity
         device_name = findViewById(R.id.device_name);
         device_mac = findViewById(R.id.mac_txt);
         status = findViewById(R.id.status_txt);
-        send_btn = findViewById(R.id.send);
+        response = findViewById(R.id.response);
+        mcu_txt = findViewById(R.id.mcu_txt);
+        read_fuse = findViewById(R.id.read_fuse);
+        detect_mcu = findViewById(R.id.detectmcu_btn);
 
         device_name.setText(name);
         device_mac.setText(mac);
         status.setText("Connecting");
 
-
-        send_btn.setOnClickListener(new View.OnClickListener()
+        detect_mcu.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                /*String msg = msg_field.getText().toString();
-                byte[] d = hexStringToByteArray(msg);
-                writeBluetooth(d);
-
-                MessageModel messageModel = new MessageModel(msg,1);
-                messageModels.add(messageModel);
-                messagesListAdapter.notifyDataSetChanged();
-                msg_field.setText("");
-
-                new ReadBT().execute();
-
-                runOnUiThread(new Runnable()
+                if (i == 0)
                 {
-                    @Override
-                    public void run()
-                    {
-                        {
-                            //lblFileContents.setText(readMsg);
-                            String msg = read_message;
+                    read_message = "";
 
-                            MessageModel messageModel = new MessageModel(read_message,2);
-                            messageModels.add(messageModel);
-                            read_message = "";
-                            messagesListAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });*/
+                    String msg = "3020";
+                    byte[] d = hexStringToByteArray(msg);
+                    writeBluetooth(d);
+
+                    new ReadBT().execute();
+
+                    i = 1;
+                } else if (i == 1)
+                {
+                    read_message = "";
+
+                    String msg = "5020";
+                    byte[] d = hexStringToByteArray(msg);
+                    writeBluetooth(d);
+
+                    new ReadBT().execute();
+
+                    i = 2;
+                } else if (i == 2)
+                {
+                    read_message = "";
+
+                    String msg = "7520";
+                    byte[] d = hexStringToByteArray(msg);
+                    writeBluetooth(d);
+
+                    new ReadBT().execute();
+
+                    i = 0;
+                }
             }
         });
 
@@ -251,6 +262,13 @@ public class DeviceActivity extends AppCompatActivity
                         {
                             read_message += String.format("%X",read[i])+ " ";
                         }
+
+                        if (read_message.equals("14 1E 98 1 10 "))
+                        {
+                            String s = read_message.substring(2,10);
+                            mcu_txt.setText("MCU : " + s);
+                        }
+                        response.setText(read_message);
                     }
                 } catch (IOException e)
                 {
